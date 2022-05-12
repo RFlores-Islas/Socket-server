@@ -47,11 +47,18 @@ export default class Server {
         this.io.on('connection', cliente => {
             console.log('Nuevo cliente conectado');
         
+            //CONECTAR CLIENTE VIDEO 40
+            socket.conectarCliente(cliente);
+
+            //CONFIGURAR USUARIO
+             socket.configurarUsuario(cliente, this.io);
+
             //ENVIAR MENSAJE
             socket.mensaje(cliente, this.io);
 
             //DESCONECTAR
             socket.desconectar(cliente);
+
         });
     }//FIN VIDEO 22
 
