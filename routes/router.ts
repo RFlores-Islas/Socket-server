@@ -1,5 +1,6 @@
 import {Router, Request, Response} from 'express';
 import Server from '../clases/server';
+import { usuariosConectados } from '../sockets/socket';
 
 export const router = Router();
 
@@ -38,7 +39,7 @@ router.post('/mensajes/:id', (req:Request, res:Response) => {
     const server = Server.instance;
 
     //VIDEO 45
-    server.io.emit('mensaje-nuevo', payload);
+    server.io.in(id).emit('mensaje-nuevo', payload);
 
     res.json({
         ok: true,
@@ -47,5 +48,32 @@ router.post('/mensajes/:id', (req:Request, res:Response) => {
         id
     });
 });
+
+//VIDEO 51 SERVICIO PARA OBTENER TODOS LOS IDS DE LOS USUARIOS
+router.get('/usuarios',async (req: Request, res: Response) => {
+    const server = Server.instance;
+    await server.io.fetchSockets().then((sockets) => {
+        res.json({
+            ok: true,
+            // clientes
+            clientes: sockets.map( cliente => cliente.id)
+        });
+    }).catch((err) => {
+        res.json({
+            ok: false,
+            err
+        })
+    });
+});
+
+//VIDEO 52
+router.get('/usuarios/detalle',async (req: Request, res: Response) => {
+
+    res.json({
+        ok:true,
+        clientes: usuariosConectados.getLista()
+    });
+});
+
 
 export default router;

@@ -25,9 +25,9 @@ export class UsuarioLista {
         console.log(this.lista);
     }
 
-    //OBTENER LISTA DE USUARIOS
+    //OBTENER LISTA DE USUARIOS VIDEO 53
     public getLista() {
-        return this.lista;
+        return this.lista.filter(usuario => usuario.nombre !== 'sin-nombre');
     }
 
     public getUsuario(id:string) {

@@ -53,11 +53,14 @@ export default class Server {
             //CONFIGURAR USUARIO
              socket.configurarUsuario(cliente, this.io);
 
+            //VIDEO 54
+            socket.obtenerUsuarios(cliente, this.io);
+
             //ENVIAR MENSAJE
             socket.mensaje(cliente, this.io);
 
             //DESCONECTAR
-            socket.desconectar(cliente);
+            socket.desconectar(cliente, this.io);
 
         });
     }//FIN VIDEO 22
